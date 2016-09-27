@@ -1,32 +1,40 @@
 import java.util.ArrayList;
-import java.util.Collections;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 
 public class Driver {
-    public static void main(String[] args) throws FileNotFoundException {
-	ArrayList<Integer> a = new ArrayList<Integer>();
+    public static void main(String[] args) {
+		FileProcessor fp = new FileProcessor("data.txt");
+	ArrayList<Student> studentList = new ArrayList<Student>();
+	ObjectPool classPool = ObjectPool.getInstance();
 
-	File f = new File("data.txt");
-	PrintWriter p = new PrintWriter(f);
-	
-	a.add(1);
-	a.add(2);
-	a.add(3);
-	a.add(4);
-	a.add(5);
-	a.add(6);
-	a.add(7);
+	while (fp.hasNextLine()) {
+	    Student curStudent = new Student(fp.getNextLine());
+	    
+	    int curClassIndex = 0;
 
-	for (int i = 1; i <= 80; ++i) {
-	    Collections.shuffle(a);
-	    p.printf("Student_%d %d %d %d %d %d %d %d\n",
-		     i, a.get(0), a.get(1), a.get(2), a.get(3), a.get(4), a.get(5), a.get(6));
+	    while (curStudent.numClasses < 5) {
+		while (curStudent.numClasses < 5 && curClassIndex < 7) {
+		    curClassIndex = curStudent.nextDesiredClass(curClassIndex);
+		    
+
+		}
+
+
+		//IF WE HAVE TO KICK SOMEONE OUT
+		
+	    }
+
+
 	}
+	/*
 
-	p.close();
-
+	Student S = new Student ("Student_x 1 5 2 3 7 4 6");
+	
+	S.enrollInClass(3);
+	S.enrollInClass(6);
+	for (int i = 0; i < 7; ++i) {
+	    System.out.printf("%d ", S.nextDesiredClass(i));
+	}
+	System.out.printf("\n");
+	*/
     }
 }
-	

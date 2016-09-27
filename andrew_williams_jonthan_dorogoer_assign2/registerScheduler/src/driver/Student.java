@@ -27,18 +27,22 @@ public class Student {
     }
     */
 
-    public Student (string inputLine) {
+    public Student (String inputLine) {
 	String temp[] = inputLine.split("\\s+");
 	
 	for (int i = 1; i <= 7; ++i)
 	    prefs[i - 1] = Integer.parseInt(temp[i]);
 
 	for (int i = 0; i < NUM_CLASSES; ++i)
-	    classesEnrolled[i] = false;
+	    classesEnrolledIn[i] = false;
 
-	for (int i = 1; i < NUM_CLASSES; ++i) {
-	    classPref[Integer.parseInt(temp[i]) - 1] = i;
+	for (int i = 1; i <= NUM_CLASSES; ++i) {
+	    classPrefs[Integer.parseInt(temp[i]) - 1] = i;
 	}
+
+
+	System.out.printf("prefs: %d %d %d %d %d %d %d\n", prefs[0], prefs[1], prefs[2], prefs[3], prefs[4], prefs[5], prefs[6]);
+	System.out.printf("classPrefs: %d %d %d %d %d %d %d\n", classPrefs[0], classPrefs[1], classPrefs[2], classPrefs[3], classPrefs[4], classPrefs[5], classPrefs[6]);
     }
 
     public void dropClass (int classNum) {
@@ -72,10 +76,21 @@ public class Student {
 	return retVal;
     }
 
-    public int nextDesiredClass() {
-	for (int i = 0; i < NUM_CLASSES; ++i) {
-	    if (classesEnrolledIn[classPrefs[i])
-		return i + 1;
+    public int nextDesiredClass(int curDesiredClass) {
+	while (curDesiredClass < NUM_CLASSES) {
+	    if (!classesEnrolledIn[classPrefs[curDesiredClass] - 1])
+		return classPrefs[curDesiredClass]; 
+	    ++curDesiredClass;
 	}
+	assert (false);
+	return -1;
     }
+    /*
+    //returns actual class number, not array index
+    public int nextDesiredClass(int curDesiredClass/*also actual class number) {
+	assert (curDesiredClass != 7);
+	for (int i = curDesiredClass 
+		 */
+
+
 }
