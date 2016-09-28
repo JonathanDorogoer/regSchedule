@@ -4,7 +4,7 @@ public class Driver {
     public static void main(String[] args) {
 	final int NUM_CLASSES = 7;
 	
-      	FileProcessor fp = new FileProcessor("data.txt");
+      	FileProcessor fp = new FileProcessor("samedata.txt");
 	ArrayList<Student> studentList = new ArrayList<Student>();
 	ObjectPool classPool = ObjectPool.getInstance();
 
@@ -27,19 +27,35 @@ public class Driver {
 		curPref = curStudent.getPrefByClass(curClass);
 	    }
 	    
-	    //If we were unable to assign five classes, we need to kick someone out of a full class
-	    curClass = curStudent.nextDesiredClass(-1);
-	    int openClass;
-	    for (int i = 0; i < NUM_CLASSES; ++i) {
-		if (!classPool.isFull(i)) {
-		    openClass = i;
-		    break;
+	    
+	    while (curStudent.numClasses() < 5) {
+		//If we were unable to assign five classes, we need to kick someone out of a full class
+		curClass = curStudent.nextDesiredClass(-1);
+		int openClass = -1;
+		for (int i = 0; i < NUM_CLASSES; ++i) {
+		    if (!classPool.isFull(i)) {
+			openClass = i;
+			break;
+		    }
 		}
-	    }
-	    for (Student studentToKick : studentList) {
+		for (Student studentToKick : studentList) {
+		    if (studentToKick.isEnrolled(curClass) && studentToKick.isNotEnrolled(openClass)) {
+			System.out.printf("Kicking student out class %d and enrolling him in class %d\n", curClass, openClass);
+			studentToKick.dropClass(curClass);
+			curStudent.enrollInClass(curClass);
+			classPool.getSeat(openClass);
+			studentToKick.enrollInClass(openClass);
+			break;
+		    }
+		}
 	    }
 	    studentList.add(curStudent);
 	}
-	
+    
+	int i = 0;
+	for (Student S : studentList) {
+	    System.out.printf("Student_%d %s\n", ++i, S.toString());
+	}
+
     }
 }

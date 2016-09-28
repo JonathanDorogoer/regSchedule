@@ -82,6 +82,14 @@ public class Student {
 	return prefByClassNum[classNum];
     }
 
+    public boolean isEnrolled (int classNum) {
+	return classesEnrolledIn[classNum];
+    }
+
+    public boolean isNotEnrolled (int classNum) {
+	return !classesEnrolledIn[classNum];
+    }
+
 
     //takes in a preference score, and returns the class number of the class with the next highest
     //preference score that student in not enrolled in
@@ -110,6 +118,20 @@ public class Student {
 	assert (curDesiredClass != 7);
 	for (int i = curDesiredClass 
 		 */
+
+    public String toString(){
+        String retVal="";
+        
+        for(int i =0; i < 7;i++){
+                if(classesEnrolledIn[i])
+                {
+                        int x = i+1;
+                        retVal += " " + x;
+                }
+        }
+        return retVal;
+    }
+
 
 
 }
