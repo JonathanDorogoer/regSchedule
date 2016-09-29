@@ -2,23 +2,20 @@ public class ObjectPool {
     
     private static ObjectPool uniqueInstance;
 
-    private final int MAX_CLASS_SIZE = 60;
-    private final int NUM_CLASSES    = 7;
-
-    private int[] seatsRemaining = {MAX_CLASS_SIZE, MAX_CLASS_SIZE, MAX_CLASS_SIZE, MAX_CLASS_SIZE, MAX_CLASS_SIZE, MAX_CLASS_SIZE, MAX_CLASS_SIZE};
+    private int[] seatsRemaining = {Constants.COURSE_CAPACITY, Constants.COURSE_CAPACITY, Constants.COURSE_CAPACITY, Constants.COURSE_CAPACITY, Constants.COURSE_CAPACITY, Constants.COURSE_CAPACITY, Constants.COURSE_CAPACITY};
 
     private ObjectPool() {}
 
     public static ObjectPool getInstance() {
+	Logger.writeMessage ("Instantiating the single instance of ObjectPool", Logger.DebugLevel.CONSTRUCTOR);
+
 	if (uniqueInstance == null)
 	    uniqueInstance = new ObjectPool();
 
 	return uniqueInstance;
     }
 
-    boolean getSeat(int classNum) {
-	assert (classNum < NUM_CLASSES);
-
+    public synchronized boolean getSeat(int classNum) {
 	if (this.isFull(classNum))
 	    return false;
 
@@ -26,22 +23,18 @@ public class ObjectPool {
 	return true;
     }
 
-    void giveSeat (int classNum) {
-	assert (classNum < NUM_CLASSES);
+    public synchronized void giveSeat (int classNum) {
 	seatsRemaining[classNum] += 1;
-	assert (seatsRemaining[classNum] <= MAX_CLASS_SIZE);
     }
 
-    boolean isFull(int classNum) {
-	assert (classNum < NUM_CLASSES);
-
+    public synchronized boolean isFull(int classNum) {
 	return (seatsRemaining[classNum] == 0);
     }
 
-    int numClassesOpen() {
+    public synchronized int numClassesOpen() {
 	int retVal = 0;
 
-	for (int i = 0; i < NUM_CLASSES; ++i) {
+	for (int i = 0; i < Constants.NUM_COURSES; ++i) {
 	    if (seatsRemaining[i] > 0) {
 		++retVal;
 	    }

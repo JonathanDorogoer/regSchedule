@@ -7,6 +7,8 @@ public class FileProcessor {
     private Scanner inputScanner = null;
 
     public FileProcessor (String fileName) {
+	Logger.writeMessage ("Instantiating a FileProcessor", Logger.DebugLevel.CONSTRUCTOR);
+
 	try {
 	    inputFile = new File(fileName);
 	    inputScanner = new Scanner(inputFile);
@@ -16,12 +18,18 @@ public class FileProcessor {
 	}
     }
 
-    public boolean hasNextLine() {
+    public synchronized boolean hasNextLine() {
 	return inputScanner.hasNextLine();
     }
 
-    public String getNextLine() {
-	return inputScanner.nextLine();
+    public synchronized boolean getNextLine(StringBuilder retString) {
+	retString.setLength(0);  //clear out last input line
+	if (!inputScanner.hasNextLine()) {
+	    retString.append("");
+	    return false;
+	}
+	retString.append(inputScanner.nextLine());
+	return true;
     }
 
 }
