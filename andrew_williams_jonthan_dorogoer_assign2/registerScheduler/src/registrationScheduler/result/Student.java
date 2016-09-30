@@ -80,7 +80,7 @@ public class Student {
 	int totalPrefScore = 0;
         String retVal = name;
         
-	retVal += " Enrolled in classes: ";
+	retVal += " Enrolled in classes:";
         for (int i = 0; i < Constants.NUM_COURSES; i++) {
 	    if (classesEnrolledIn[i]) {
 		int x = i+1;

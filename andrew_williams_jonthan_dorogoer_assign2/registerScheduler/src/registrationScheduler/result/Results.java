@@ -17,6 +17,9 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 	    sb.append(s.toString());
 	    sb.append("\n");
 	}
+	//get rid of the trailing \n
+	if (sb.length() > 0)
+	    sb.setLength(sb.length() - 1);
 
 	return sb.toString();
     }
@@ -55,7 +58,7 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 	    if (s.isEnrolled(fullClass) && s.isNotEnrolled(openClass))
 		return s;
 	}
-	Student s = new Student("crashit");
+	Student s = new Student("");
 	return s;
     }
     
