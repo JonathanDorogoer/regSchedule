@@ -43,16 +43,22 @@ ant -buildfile src/build.xml tarzip
 DATA STRUCTURES:
 
 [
+In Results, we chose to store the students in an ArrayList.  This makes sense because we need to make many insertions into the ArrayList and often need to get students out of the list, which are both O(1) operations.
+ArrayLists have O(n) remove operations, but since we never remove a student from our list, this was not a problem.
 
-Created class called student- in order to keep information regarding each particular student.
-Used ArrayList in order to hold students in order of input, needed to access students in a linear fashion.
-Used ArrayList in order to fill classes in a linear fashion.
+In ObjectPool, we chose to represent the class seats with a simple array of integers.  This allowed O(1) access and modification, which are the only operations we need to do.  The array was a good choice since we know how many classes there are and how many seats are in each class ahead of time, and these values will not change during the
+course of execution.
 ]
 
 TIME COMPLEXITY (run() method):
 
 [
+We first define N to be the number of students.
 
+Our run method has a main loop which runs once for each student.  Inside that loop we have a two consececutive (not nested) while loops.  The first loop will run a maximum of COURSES_PER_SUDENT TIMES.  The second loop also runs a maximum of COURSES_PER_STUDENT times, but contains a nested loop which runs a maximum of NUM_COURSES times.
+
+Thus our run time is given by O (N * (O(COURSES_PER_STUDENT) + O(COURSES_PER_STUDENT) * O (NUM_COURSES))
+Since COURSES_PER_STUDENT and NUM_COURSES are both constants, this simplifies to a run time of O(N).
 
 ]
 
