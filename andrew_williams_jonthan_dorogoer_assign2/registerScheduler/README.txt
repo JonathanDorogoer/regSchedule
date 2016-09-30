@@ -55,9 +55,9 @@ TIME COMPLEXITY (run() method):
 [
 We first define N to be the number of students.
 
-Our run method has a main loop which runs once for each student.  Inside that loop we have a two consececutive (not nested) while loops.  The first loop will run a maximum of COURSES_PER_SUDENT TIMES.  The second loop also runs a maximum of COURSES_PER_STUDENT times, but contains a nested loop which runs a maximum of NUM_COURSES times.
+Our run method has a main loop which runs once for each student.  Inside that loop we have two consececutive (not nested) while loops.  The first loop will run a maximum of COURSES_PER_SUDENT times.  The second loop also runs a maximum of COURSES_PER_STUDENT times, but contains a nested loop which runs a maximum of NUM_COURSES times.
 
-Thus our run time is given by O (N * (O(COURSES_PER_STUDENT) + O(COURSES_PER_STUDENT) * O (NUM_COURSES))
+Thus our run time is given by O(N * (O(COURSES_PER_STUDENT) + O(COURSES_PER_STUDENT) * O (NUM_COURSES))
 Since COURSES_PER_STUDENT and NUM_COURSES are both constants, this simplifies to a run time of O(N).
 
 ]
