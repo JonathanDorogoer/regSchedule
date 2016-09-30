@@ -29,8 +29,7 @@ ant -buildfile src/build.xml clean
 ant -buildfile src/build.xml all
 
 ## To run by specifying arguments from command line [similarly for the 2nd argument and so on ...]
-## We will use this to run your code
-ant -buildfile src/build.xml run -Darg0=firstarg 
+ant -buildfile src/build.xml -Darg0=data.txt -Darg1=dataout.txt -Darg2=3 -Darg3=0 run
 
 ## To run by specifying args in build.xml (just for debugging, not for submission)
 ant -buildfile src/build.xml run
