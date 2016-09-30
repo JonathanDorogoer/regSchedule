@@ -15,7 +15,7 @@ public class FileProcessor {
 	    inputFile = new File(fileName);
 	    inputScanner = new Scanner(inputFile);
 	} catch (FileNotFoundException e) {
-	    System.out.printf("ERROR: Input file %s not found.  Program halting.\n", fileName);
+	    e.printStackTrace();
 	    System.exit(1);
 	}
     }

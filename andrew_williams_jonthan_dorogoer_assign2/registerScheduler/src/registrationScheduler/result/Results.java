@@ -54,7 +54,7 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 	for (Student s : students) {
 	    if (s.isEnrolled(fullClass) && s.isNotEnrolled(openClass))
 		return s;
-		}
+	}
 	Student s = new Student("crashit");
 	return s;
     }
