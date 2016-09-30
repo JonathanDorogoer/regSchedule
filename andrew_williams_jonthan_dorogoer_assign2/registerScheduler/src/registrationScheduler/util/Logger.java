@@ -44,7 +44,7 @@ public class Logger{
 	    System.out.println(message);
     }
 /**
- *prints current debug level
+ *@return current debug level
  */
     public String toString() {
 	return "Debug Level is " + debugLevel;
