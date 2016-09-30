@@ -1,7 +1,5 @@
 package registrationScheduler.driver;
-
 import java.util.ArrayList;
-
 import registrationScheduler.util.FileProcessor;
 import registrationScheduler.util.Logger;
 import registrationScheduler.results.StdoutDisplayInterface;
@@ -37,7 +35,8 @@ public class Driver {
 	    System.exit(0);
 	}
 	Logger.setDebugValue(debugValue);
-	
+
+	//System.out.println(args[0]+" "+	args[1]+" " +args[2]+" " +args[3]);
       	FileProcessor fileProcessor = new FileProcessor(args[0]);
 	ObjectPoolInterface classPoolInterface = ObjectPool.getInstance();
 	StdoutDisplayInterface resultsInterface = new Results();
@@ -46,7 +45,7 @@ public class Driver {
 	CreateWorkers createWorkers = new CreateWorkers (fileProcessor, resultsInterface, classPoolInterface);
 	createWorkers.startWorkers(numThreads);
 
-	results.writeSchedulesToScreen();
+//	results.writeSchedulesToScreen();
 	results.writeSchedulesToFile(args[1]);
 	System.out.printf("The average preference value is %.1f\n", results.getAveragePrefScore());
     }
