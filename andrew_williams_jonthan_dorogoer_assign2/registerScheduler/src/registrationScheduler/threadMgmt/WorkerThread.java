@@ -5,28 +5,29 @@ import registrationScheduler.util.Constants;
 import registrationScheduler.results.Results;
 import registrationScheduler.util.Logger;
 import registrationScheduler.objectPool.ObjectPool;
+import registrationScheduler.objectPool.ObjectPoolInterface;
 import registrationScheduler.util.FileProcessor;
 import registrationScheduler.results.StdoutDisplayInterface;
 
 public class WorkerThread implements Runnable {
     private FileProcessor          fileProcessor;
     private StdoutDisplayInterface resultsInterface;
-    private ObjectPool             classPool;
+    private ObjectPoolInterface    classPoolInterface;
 
 /**
  *
  *Constructor for worker thread
  *
- *@param fp gives the worker thread a file processor
+ *@param fp givesgg30 the worker thread a file processor
  *@param r gives the worker a  StdoutInterface
  *@param cp give the worker a object pool
  */
-    public WorkerThread (FileProcessor fp, StdoutDisplayInterface r, ObjectPool cp) {
+    public WorkerThread (FileProcessor fp, StdoutDisplayInterface r, ObjectPoolInterface cp) {
 	Logger.writeMessage ("Instantiating a WorkerThread", Logger.DebugLevel.CONSTRUCTOR);
 	
 	fileProcessor = fp;
 	resultsInterface = r;
-	classPool = cp;
+	classPoolInterface = cp;
     }
 
 /**
@@ -40,6 +41,7 @@ public class WorkerThread implements Runnable {
     public void run() {
 	Logger.writeMessage (Thread.currentThread().getName() + " began its run method", Logger.DebugLevel.RUN_THREAD);
 	Results results = (Results) resultsInterface;
+	ObjectPool classPool = (ObjectPool) classPoolInterface;
 
 	Student curStudent;
 	StringBuilder inputStringBuilder = new StringBuilder("");
@@ -55,7 +57,7 @@ public class WorkerThread implements Runnable {
 	    while (curStudent.numClasses() < Constants.COURSES_PER_STUDENT) {
 		curClass = curStudent.nextDesiredClass(curPref);
 		if (curClass == -1) break;
-		if (classPool.getSeat(curClass)) {
+		if (classPool.borrowObject(curClass)) {
 		    curStudent.enrollInClass(curClass);
 		}
 		curPref = curStudent.getPrefByClass(curClass);
@@ -75,7 +77,7 @@ public class WorkerThread implements Runnable {
 		Student studentToKick = results.findStudentToKick(curClass, openClass);
 		studentToKick.dropClass(curClass);
 		curStudent.enrollInClass(curClass);
-		classPool.getSeat(openClass);
+		classPool.borrowObject(openClass);
 		studentToKick.enrollInClass(openClass);
 	    }
 	    results.addStudent(curStudent);

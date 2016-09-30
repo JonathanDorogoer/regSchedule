@@ -6,6 +6,7 @@ import registrationScheduler.results.StdoutDisplayInterface;
 import registrationScheduler.results.Results;
 import registrationScheduler.threadMgmt.CreateWorkers;
 import registrationScheduler.objectPool.ObjectPool;
+import registrationScheduler.objectPool.ObjectPoolInterface;
 
 public class Driver {
     
@@ -20,13 +21,13 @@ public class Driver {
 	Logger.setDebugValue(Logger.DebugLevel.DATA_STRUCTURE);
 
       	FileProcessor fileProcessor = new FileProcessor("src/registrationScheduler/driver/data.txt");
-	ObjectPool classPool = ObjectPool.getInstance();
+	ObjectPoolInterface classPoolInterface = ObjectPool.getInstance();
 	StdoutDisplayInterface resultsInterface = new Results();
 	Results results = (Results) resultsInterface;
 
 	int numThreads = 3;
 
-	CreateWorkers createWorkers = new CreateWorkers (fileProcessor, resultsInterface, classPool);
+	CreateWorkers createWorkers = new CreateWorkers (fileProcessor, resultsInterface, classPoolInterface);
 	createWorkers.startWorkers(numThreads);
 
 	Logger.writeMessage(results.toString(), Logger.DebugLevel.DATA_STRUCTURE);

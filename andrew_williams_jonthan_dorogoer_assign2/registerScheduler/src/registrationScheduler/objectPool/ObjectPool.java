@@ -1,25 +1,37 @@
 package registrationScheduler.objectPool;
+
 import registrationScheduler.util.Constants;
 import registrationScheduler.util.Logger;
 
-public class ObjectPool {
+public class ObjectPool implements ObjectPoolInterface {
     
-    private static ObjectPool uniqueInstance;
+    private volatile static ObjectPool uniqueInstance;
 
-    private int[] seatsRemaining = {Constants.COURSE_CAPACITY, Constants.COURSE_CAPACITY, Constants.COURSE_CAPACITY, Constants.COURSE_CAPACITY, Constants.COURSE_CAPACITY, Constants.COURSE_CAPACITY, Constants.COURSE_CAPACITY};
+    private int[] seatsRemaining = {Constants.COURSE_CAPACITY,
+				    Constants.COURSE_CAPACITY,
+				    Constants.COURSE_CAPACITY,
+				    Constants.COURSE_CAPACITY,
+				    Constants.COURSE_CAPACITY,
+				    Constants.COURSE_CAPACITY,
+				    Constants.COURSE_CAPACITY};
 
     private ObjectPool() {}
 
     public static ObjectPool getInstance() {
 	Logger.writeMessage ("Instantiating the single instance of ObjectPool", Logger.DebugLevel.CONSTRUCTOR);
 
-	if (uniqueInstance == null)
-	    uniqueInstance = new ObjectPool();
+	if (uniqueInstance == null) {
+	    synchronized (ObjectPool.class) {
+		if (uniqueInstance == null) {
+		    uniqueInstance = new ObjectPool();
+		}
+	    }
+	}
 
 	return uniqueInstance;
     }
 
-    public synchronized boolean getSeat(int classNum) {
+    public synchronized boolean borrowObject (int classNum) {
 	if (this.isFull(classNum))
 	    return false;
 
@@ -27,8 +39,16 @@ public class ObjectPool {
 	return true;
     }
 
-    public synchronized void giveSeat (int classNum) {
+    public synchronized void returnObject (int classNum) {
 	seatsRemaining[classNum] += 1;
+    }
+
+    public synchronized int getNumActive (int classNum) {
+	return Constants.COURSE_CAPACITY - seatsRemaining[classNum];
+    }
+
+    public synchronized int getNumIdle (int classNum) {
+	return seatsRemaining[classNum];
     }
 
     public synchronized boolean isFull(int classNum) {

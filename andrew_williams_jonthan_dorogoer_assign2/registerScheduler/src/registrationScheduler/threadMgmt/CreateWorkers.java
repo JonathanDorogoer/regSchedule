@@ -2,13 +2,14 @@ package registrationScheduler.threadMgmt;
 import java.util.ArrayList;
 import registrationScheduler.util.Logger;
 import registrationScheduler.objectPool.ObjectPool;
+import registrationScheduler.objectPool.ObjectPoolInterface;
 import registrationScheduler.results.StdoutDisplayInterface;
 import registrationScheduler.util.FileProcessor;
 
 public class CreateWorkers {
     private FileProcessor          fileProcessor;
     private StdoutDisplayInterface results;
-    private ObjectPool             classPool;
+    private ObjectPoolInterface    classPoolInterface;
 /**
  *Creates a new worker.
  *
@@ -16,12 +17,12 @@ public class CreateWorkers {
  *@param r passes a StdoutInterface to a worker
  *@param cp passes a objectPool to a worker
  */
-    public CreateWorkers (FileProcessor fp, StdoutDisplayInterface r, ObjectPool cp) {
+    public CreateWorkers (FileProcessor fp, StdoutDisplayInterface r, ObjectPoolInterface cp) {
 	Logger.writeMessage ("Instantiating a CreateWorkers", Logger.DebugLevel.CONSTRUCTOR);
 
 	fileProcessor = fp;
 	results = r;
-	classPool = cp;
+	classPoolInterface = cp;
     }
 /**
  * Starts a number of workers depending on number of threads passed.
@@ -30,7 +31,7 @@ public class CreateWorkers {
     public void startWorkers (int numThreads) {
 	ArrayList<Thread> threadList = new ArrayList<Thread>();
 
-	Runnable threadJob = new WorkerThread(fileProcessor, results, classPool);
+	Runnable threadJob = new WorkerThread(fileProcessor, results, classPoolInterface);
 	for (int i = 0; i < numThreads; ++i)
 	    threadList.add(new Thread(threadJob));
 
