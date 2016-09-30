@@ -92,5 +92,14 @@ public class Student {
 
         return retVal;
     }
+
+    public int getTotalPrefScore() {
+	int totalPrefScore = 0;
+	for (int i = 0; i < Constants.NUM_COURSES; ++i) {
+	    if (classesEnrolledIn[i])
+		totalPrefScore += prefByClassNum[i] + 1;
+	}
+	return totalPrefScore;
+    }
     
 }

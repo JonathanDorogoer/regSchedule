@@ -14,14 +14,16 @@ public class Driver {
 
       	FileProcessor fileProcessor = new FileProcessor("src/registrationScheduler/driver/data.txt");
 	ObjectPool classPool = ObjectPool.getInstance();
-	StdoutDisplayInterface results = new Results();
+	StdoutDisplayInterface resultsInterface = new Results();
+	Results results = (Results) resultsInterface;
 
 	int numThreads = 3;
 
-	CreateWorkers createWorkers = new CreateWorkers (fileProcessor, results, classPool);
+	CreateWorkers createWorkers = new CreateWorkers (fileProcessor, resultsInterface, classPool);
 	createWorkers.startWorkers(numThreads);
 
 	Logger.writeMessage(results.toString(), Logger.DebugLevel.DATA_STRUCTURE);
+	System.out.printf("The average preference value is %.1f\n", results.getAveragePrefScore());
 	//results.writeSchedulesToScreen();
 	
     }

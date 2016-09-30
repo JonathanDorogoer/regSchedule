@@ -67,6 +67,15 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 	student.dropClass (classNum);
     }
 
+    public double getAveragePrefScore() {
+	double numStudents = 0;
+	double totalPrefScore = 0;
+	for (Student student : students) {
+	    ++numStudents;
+	    totalPrefScore += student.getTotalPrefScore();
+	}
+	return totalPrefScore / numStudents;
+    }
 }
 
     
