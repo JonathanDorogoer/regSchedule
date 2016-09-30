@@ -9,7 +9,13 @@ public class CreateWorkers {
     private FileProcessor          fileProcessor;
     private StdoutDisplayInterface results;
     private ObjectPool             classPool;
-
+/**
+ *Creates a new worker.
+ *
+ *@param fp passes a fp to a worker
+ *@param r passes a StdoutInterface to a worker
+ *@param cp passes a objectPool to a worker
+ */
     public CreateWorkers (FileProcessor fp, StdoutDisplayInterface r, ObjectPool cp) {
 	Logger.writeMessage ("Instantiating a CreateWorkers", Logger.DebugLevel.CONSTRUCTOR);
 
@@ -17,7 +23,10 @@ public class CreateWorkers {
 	results = r;
 	classPool = cp;
     }
-
+/**
+ * Starts a number of workers depending on number of threads passed.
+ *@param numThreads passes number of threads needed for execution
+ */
     public void startWorkers (int numThreads) {
 	ArrayList<Thread> threadList = new ArrayList<Thread>();
 

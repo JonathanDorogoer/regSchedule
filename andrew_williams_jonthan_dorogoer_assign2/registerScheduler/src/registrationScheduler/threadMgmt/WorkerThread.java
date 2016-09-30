@@ -13,6 +13,14 @@ public class WorkerThread implements Runnable {
     private StdoutDisplayInterface resultsInterface;
     private ObjectPool             classPool;
 
+/**
+ *
+ *Constructor for worker thread
+ *
+ *@param fp gives the worker thread a file processor
+ *@param r gives the worker a  StdoutInterface
+ *@param cp give the worker a object pool
+ */
     public WorkerThread (FileProcessor fp, StdoutDisplayInterface r, ObjectPool cp) {
 	Logger.writeMessage ("Instantiating a WorkerThread", Logger.DebugLevel.CONSTRUCTOR);
 	
@@ -21,6 +29,14 @@ public class WorkerThread implements Runnable {
 	classPool = cp;
     }
 
+/**
+ *
+ *Run method for worker thread, needed to implement a Runnable subclass.
+ *Takes student from a file 1 line at a time and puts them into a class.
+ *If student can't get in 5 classes, kick and try again.
+ *Resulting classes are added after each student is placed in a class.
+ *
+ */
     public void run() {
 	Logger.writeMessage (Thread.currentThread().getName() + " began its run method", Logger.DebugLevel.RUN_THREAD);
 	Results results = (Results) resultsInterface;
