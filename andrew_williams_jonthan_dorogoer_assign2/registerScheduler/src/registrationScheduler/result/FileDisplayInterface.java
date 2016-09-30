@@ -2,5 +2,5 @@ package registrationScheduler.result;
 
 
 public interface FileDisplayInterface {
-    public void writeSchedulesToFile();
+    public void writeSchedulesToFile(String outputFileName);
 }

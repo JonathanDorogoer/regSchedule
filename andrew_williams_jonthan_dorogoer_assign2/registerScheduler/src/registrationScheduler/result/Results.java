@@ -1,7 +1,12 @@
 package registrationScheduler.result;
+
 import java.util.ArrayList;
 import registrationScheduler.util.Logger;
 import registrationScheduler.util.Constants;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 public class Results implements StdoutDisplayInterface, FileDisplayInterface {
     ArrayList<Student> students = new ArrayList<Student>();
@@ -52,8 +57,41 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 	    System.out.printf("Class %d has %d students enrolled.\n", i + 1, numStudentsInClass[i]);
     }
 
-    public void writeSchedulesToFile() {
-	System.out.printf("writeSchedulesToFile\n");
+    /**
+     *
+     *@param outputFileName name of file to write results to (will be created if not present and destroyed/overwritten if it is present)
+     *
+     */
+    public void writeSchedulesToFile(String outputFileName) {
+	File outputFile            = null;
+	PrintWriter outPrintWriter = null;
+	int numStudentsInClass[] = new int[Constants.NUM_COURSES];
+	
+	try {
+	    outputFile = new File(outputFileName);
+	    outPrintWriter = new PrintWriter(outputFile);
+	} catch (FileNotFoundException e) {
+	    e.printStackTrace();
+	    System.exit(1);
+	}
+	
+	for (int i = 0; i < Constants.NUM_COURSES; ++i)
+	    numStudentsInClass[i] = 0;
+
+	for (Student s : students) {
+	    outPrintWriter.printf("%s\n", s.toString());
+	    for (int i = 0; i < Constants.NUM_COURSES; ++i) {
+		if (s.isEnrolled(i))
+		    numStudentsInClass[i] += 1;
+	    }
+	}
+	
+	for (int i = 0; i < Constants.NUM_COURSES; ++i)
+	    outPrintWriter.printf("Class %d has %d students enrolled.\n", i + 1, numStudentsInClass[i]);
+
+	outPrintWriter.printf("The average preference value is %.1f\n", getAveragePrefScore());
+
+	outPrintWriter.close();
     }
 
     public synchronized void addStudent (Student student) {

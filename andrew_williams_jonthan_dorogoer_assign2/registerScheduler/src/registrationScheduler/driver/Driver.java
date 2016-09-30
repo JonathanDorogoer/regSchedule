@@ -30,6 +30,7 @@ public class Driver {
 	createWorkers.startWorkers(numThreads);
 
 	Logger.writeMessage(results.toString(), Logger.DebugLevel.DATA_STRUCTURE);
+	results.writeSchedulesToFile("newresults.txt");
 	System.out.printf("The average preference value is %.1f\n", results.getAveragePrefScore());
 	//results.writeSchedulesToScreen();
 	
