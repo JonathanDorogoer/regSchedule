@@ -1,6 +1,6 @@
 package registrationScheduler.threadMgmt;
-import registrationScheduler.results.Student;
 
+import registrationScheduler.results.Student;
 import registrationScheduler.util.Constants;
 import registrationScheduler.results.Results;
 import registrationScheduler.util.Logger;
@@ -14,35 +14,34 @@ public class WorkerThread implements Runnable {
     private StdoutDisplayInterface resultsInterface;
     private ObjectPoolInterface    classPoolInterface;
 
-/**
- *
- *Constructor for worker thread
- *
- *@param fp givesgg30 the worker thread a file processor
- *@param r gives the worker a  StdoutInterface
- *@param cp give the worker a object pool
- */
-    public WorkerThread (FileProcessor fp, StdoutDisplayInterface r, ObjectPoolInterface cp) {
+    /**
+     *Constructor for worker thread
+     *
+     *@param fileProcessorIn fileProcessor to get student data from
+     *@param resultsInterfaceIn class used to store students as we process them
+     *@param classPoolInterfaceIn object pool which we give / take class seats from
+     */
+    public WorkerThread (FileProcessor fileProcessorIn, StdoutDisplayInterface resultsInterfaceIn, ObjectPoolInterface classPoolInterfaceIn) {
 	Logger.writeMessage ("Instantiating a WorkerThread", Logger.DebugLevel.CONSTRUCTOR);
 	
-	fileProcessor = fp;
-	resultsInterface = r;
-	classPoolInterface = cp;
+	fileProcessor = fileProcessorIn;
+	resultsInterface = resultsInterfaceIn;;
+	classPoolInterface = classPoolInterfaceIn;;
     }
 
-/**
- *
- *Run method for worker thread, needed to implement a Runnable subclass.
- *Takes student from a file 1 line at a time and puts them into a class.
- *If student can't get in 5 classes, kick and try again.
- *Resulting classes are added after each student is placed in a class.
- *
- */
+    /**
+     *
+     *Run method for worker thread, needed to implement a Runnable subclass.
+     *Takes student from a file 1 line at a time and puts them into a class.
+     *If student can't get in 5 classes, kick and try again.
+     *Resulting classes are added after each student is placed in a class.
+     *
+     */
     public void run() {
 	Logger.writeMessage (Thread.currentThread().getName() + " began its run method", Logger.DebugLevel.RUN_THREAD);
+
 	Results results = (Results) resultsInterface;
 	ObjectPool classPool = (ObjectPool) classPoolInterface;
-
 	Student curStudent;
 	StringBuilder inputStringBuilder = new StringBuilder("");
 	String inputLine = "";
@@ -82,7 +81,5 @@ public class WorkerThread implements Runnable {
 	    }
 	    results.addStudent(curStudent);
 	}
-
     }
-
 }

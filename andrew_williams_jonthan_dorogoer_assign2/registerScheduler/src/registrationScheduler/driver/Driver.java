@@ -1,5 +1,7 @@
 package registrationScheduler.driver;
+
 import java.util.ArrayList;
+
 import registrationScheduler.util.FileProcessor;
 import registrationScheduler.util.Logger;
 import registrationScheduler.results.StdoutDisplayInterface;
@@ -18,22 +20,34 @@ public class Driver {
      *
      */
     public static void main(String[] args) {
-	Logger.setDebugValue(Logger.DebugLevel.DATA_STRUCTURE);
+	if (args.length != 4) {
+	    System.out.printf("Please run with exactly four arguments, as follows:\n./java -jar registrationScheduler.jar <inputfilename> <outputfilename> <number of threads> <debug value>\n");
+	    System.exit(0);
+	}
 
-      	FileProcessor fileProcessor = new FileProcessor("src/registrationScheduler/driver/data.txt");
+	int numThreads = Integer.parseInt(args[2]);
+	if (numThreads < 1 || numThreads > 3) {
+	    System.out.printf ("Error: the number of threads must be between one and three\n");
+	    System.exit(0);
+	}
+
+	int debugValue = Integer.parseInt(args[3]);
+	if (debugValue < 0 || debugValue > 4) {
+	    System.out.printf ("Error: debug value must be between zero and four\n");
+	    System.exit(0);
+	}
+	Logger.setDebugValue(debugValue);
+	
+      	FileProcessor fileProcessor = new FileProcessor(args[0]);
 	ObjectPoolInterface classPoolInterface = ObjectPool.getInstance();
 	StdoutDisplayInterface resultsInterface = new Results();
 	Results results = (Results) resultsInterface;
 
-	int numThreads = 3;
-
 	CreateWorkers createWorkers = new CreateWorkers (fileProcessor, resultsInterface, classPoolInterface);
 	createWorkers.startWorkers(numThreads);
 
-	Logger.writeMessage(results.toString(), Logger.DebugLevel.DATA_STRUCTURE);
-	results.writeSchedulesToFile("newresults.txt");
+	results.writeSchedulesToScreen();
+	results.writeSchedulesToFile(args[1]);
 	System.out.printf("The average preference value is %.1f\n", results.getAveragePrefScore());
-	//results.writeSchedulesToScreen();
-	
     }
 }
