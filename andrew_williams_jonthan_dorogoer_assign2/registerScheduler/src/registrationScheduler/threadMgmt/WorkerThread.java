@@ -1,12 +1,12 @@
 package registrationScheduler.threadMgmt;
-import registrationScheduler.result.Student;
+import registrationScheduler.results.Student;
 
 import registrationScheduler.util.Constants;
-import registrationScheduler.result.Results;
+import registrationScheduler.results.Results;
 import registrationScheduler.util.Logger;
 import registrationScheduler.objectPool.ObjectPool;
 import registrationScheduler.util.FileProcessor;
-import registrationScheduler.result.StdoutDisplayInterface;
+import registrationScheduler.results.StdoutDisplayInterface;
 
 public class WorkerThread implements Runnable {
     private FileProcessor          fileProcessor;

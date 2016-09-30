@@ -1,4 +1,4 @@
-package registrationScheduler.result;
+package registrationScheduler.results;
 
 import java.util.ArrayList;
 import registrationScheduler.util.Logger;

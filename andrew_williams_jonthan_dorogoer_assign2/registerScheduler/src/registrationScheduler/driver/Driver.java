@@ -2,8 +2,8 @@ package registrationScheduler.driver;
 import java.util.ArrayList;
 import registrationScheduler.util.FileProcessor;
 import registrationScheduler.util.Logger;
-import registrationScheduler.result.StdoutDisplayInterface;
-import registrationScheduler.result.Results;
+import registrationScheduler.results.StdoutDisplayInterface;
+import registrationScheduler.results.Results;
 import registrationScheduler.threadMgmt.CreateWorkers;
 import registrationScheduler.objectPool.ObjectPool;
 

@@ -2,7 +2,7 @@ package registrationScheduler.threadMgmt;
 import java.util.ArrayList;
 import registrationScheduler.util.Logger;
 import registrationScheduler.objectPool.ObjectPool;
-import registrationScheduler.result.StdoutDisplayInterface;
+import registrationScheduler.results.StdoutDisplayInterface;
 import registrationScheduler.util.FileProcessor;
 
 public class CreateWorkers {
